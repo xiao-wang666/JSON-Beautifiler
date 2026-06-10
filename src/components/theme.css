@@ -1,0 +1,313 @@
+/**
+ * Theme CSS variables.
+ *
+ * The active theme is applied as a `data-theme` attribute on the App root
+ * wrapper (see App.tsx). Each theme block defines the same set of CSS custom
+ * properties so the input area, tree view and syntax highlighting can read a
+ * single token and stay in sync when the theme changes (Requirement 6.2).
+ */
+
+/* Reset default margins to prevent page-level scrollbar */
+html,
+body,
+#root {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  overflow: hidden;
+}
+
+:root {
+  /* Layout tokens shared across themes. */
+  --jb-font-mono:
+    ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, "Liberation Mono",
+    monospace;
+  --jb-font-ui: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  --jb-radius: 6px;
+  --jb-gap: 12px;
+}
+
+/* Light theme (default). */
+[data-theme="light"] {
+  --jb-bg: #ffffff;
+  --jb-bg-elevated: #f5f6f8;
+  --jb-border: #d9dce1;
+  --jb-text: #1f2328;
+  --jb-text-muted: #6b7280;
+
+  /* Syntax token colors. */
+  --jb-token-key: #0550ae;
+  --jb-token-string: #0a7d33;
+  --jb-token-number: #b35900;
+  --jb-token-boolean: #8250df;
+  --jb-token-null: #6b7280;
+  --jb-token-punctuation: #57606a;
+  --jb-link: #0969da;
+
+  /* Search highlight. */
+  --jb-match-bg: #fff3b0;
+  --jb-match-current-bg: #ffd43b;
+}
+
+/* Dark theme. */
+[data-theme="dark"] {
+  --jb-bg: #0d1117;
+  --jb-bg-elevated: #161b22;
+  --jb-border: #30363d;
+  --jb-text: #e6edf3;
+  --jb-text-muted: #8b949e;
+
+  /* Syntax token colors. */
+  --jb-token-key: #79c0ff;
+  --jb-token-string: #7ee787;
+  --jb-token-number: #ffa657;
+  --jb-token-boolean: #d2a8ff;
+  --jb-token-null: #8b949e;
+  --jb-token-punctuation: #8b949e;
+  --jb-link: #58a6ff;
+
+  /* Search highlight. */
+  --jb-match-bg: #6f5400;
+  --jb-match-current-bg: #b08800;
+}
+
+.jb-app {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  background: var(--jb-bg);
+  color: var(--jb-text);
+  font-family: var(--jb-font-ui);
+}
+
+.jb-header {
+  display: flex;
+  align-items: center;
+  gap: var(--jb-gap);
+  padding: 8px var(--jb-gap);
+  border-bottom: 1px solid var(--jb-border);
+  background: var(--jb-bg-elevated);
+  flex-wrap: wrap;
+}
+
+.jb-header h1 {
+  font-size: 16px;
+  margin: 0;
+  white-space: nowrap;
+}
+
+.jb-logo-text {
+  font-size: 15px;
+  font-weight: 600;
+  white-space: nowrap;
+  margin-right: 8px;
+}
+
+.jb-main {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: var(--jb-gap);
+  padding: var(--jb-gap);
+  min-height: 0;
+}
+
+.jb-toolbar,
+.jb-search {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.jb-search-bar {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  width: 380px;
+  min-width: 150px;
+}
+
+.jb-panels {
+  flex: 1;
+  display: flex;
+  gap: var(--jb-gap);
+  min-height: 0;
+}
+
+.jb-input-slot {
+  flex: 1;
+  min-width: 200px;
+  border: 1px solid var(--jb-border);
+  border-radius: var(--jb-radius);
+  background: var(--jb-bg-elevated);
+  overflow: hidden;
+  position: relative;
+}
+
+.jb-tree-slot {
+  flex: 1;
+  min-width: 200px;
+  border: 1px solid var(--jb-border);
+  border-radius: var(--jb-radius);
+  background: var(--jb-bg-elevated);
+  overflow: auto;
+  position: relative;
+}
+
+/* InputPanel textarea. */
+.jb-input-slot .ant-input-textarea,
+.jb-input-slot .ant-input-textarea textarea {
+  height: 100% !important;
+}
+
+.jb-input-textarea {
+  width: 100%;
+  height: 100%;
+  box-sizing: border-box;
+  resize: none;
+  border: none;
+  outline: none;
+  padding: var(--jb-gap);
+  background: transparent;
+  color: var(--jb-text);
+  font-family: var(--jb-font-mono);
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+.jb-input-textarea::placeholder {
+  color: var(--jb-text-muted);
+}
+
+/* ErrorBanner — overlay on tree panel. */
+.jb-error-banner {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  gap: 8px;
+  padding: 24px;
+  background: rgba(254, 242, 242, 0.92);
+  backdrop-filter: blur(4px);
+  color: #991b1b;
+  font-family: var(--jb-font-ui);
+  font-size: 15px;
+  line-height: 1.6;
+  text-align: center;
+  z-index: 10;
+  border-radius: var(--jb-radius);
+}
+
+[data-theme="dark"] .jb-error-banner {
+  background: rgba(45, 27, 27, 0.92);
+  color: #fca5a5;
+}
+
+.jb-error-banner .jb-error-icon {
+  font-size: 28px;
+  opacity: 0.8;
+}
+
+.jb-error-position {
+  white-space: nowrap;
+  opacity: 0.8;
+}
+
+/* TreeRow styles. */
+.jb-tree-row {
+  display: flex;
+  align-items: baseline;
+  gap: 4px;
+  padding: 2px 8px;
+  font-family: var(--jb-font-mono);
+  font-size: 14px;
+  line-height: 1.5;
+  white-space: nowrap;
+  transition: background 0.15s;
+  border-radius: 3px;
+}
+
+.jb-tree-row-collapsible {
+  cursor: pointer;
+}
+
+.jb-tree-row-collapsible:hover {
+  background: var(--jb-bg-elevated);
+}
+
+.jb-toggle-indicator {
+  display: inline-block;
+  width: 1em;
+  text-align: center;
+  font-size: 10px;
+  user-select: none;
+  transition: transform 0.15s;
+}
+
+.jb-token-key {
+  color: var(--jb-token-key);
+}
+
+.jb-token-string {
+  color: var(--jb-token-string);
+}
+
+.jb-token-number {
+  color: var(--jb-token-number);
+}
+
+.jb-token-boolean {
+  color: var(--jb-token-boolean);
+}
+
+.jb-token-null {
+  color: var(--jb-token-null);
+}
+
+.jb-token-punctuation {
+  color: var(--jb-token-punctuation);
+}
+
+.jb-link {
+  color: var(--jb-link);
+  text-decoration: underline;
+}
+
+.jb-link:hover {
+  text-decoration: none;
+}
+
+.jb-collapse-summary {
+  opacity: 0.7;
+}
+
+/* Search match highlighting. */
+.jb-match {
+  background: var(--jb-match-bg);
+  border-radius: 3px;
+  transition: background 0.2s;
+}
+
+.jb-match-current {
+  background: var(--jb-match-current-bg);
+  border-radius: 3px;
+  box-shadow: 0 0 0 2px var(--jb-match-current-bg);
+}
+
+/* Responsive: stack panels vertically on narrow viewports. */
+@media (max-width: 767px) {
+  .jb-panels {
+    flex-direction: column;
+  }
+  .jb-input-slot,
+  .jb-tree-slot {
+    flex: 1;
+    min-height: 200px;
+  }
+}
