@@ -10,6 +10,7 @@
  * Requirements: 4.3, 4.4, 4.5
  */
 
+import { useState } from "react";
 import { Button, Space, message } from "antd";
 import {
   CopyOutlined,
@@ -21,6 +22,7 @@ import { prettyPrint } from "../core/printer";
 
 export function Toolbar() {
   const { state, dispatch } = useAppContext();
+  const [expanded, setExpanded] = useState(true);
 
   const handleCopy = async () => {
     const text = prettyPrint(state.model);
@@ -32,12 +34,13 @@ export function Toolbar() {
     }
   };
 
-  const handleExpandAll = () => {
-    dispatch({ type: "expandAll" });
-  };
-
-  const handleCollapseAll = () => {
-    dispatch({ type: "collapseAll" });
+  const handleToggleAll = () => {
+    if (expanded) {
+      dispatch({ type: "collapseAll" });
+    } else {
+      dispatch({ type: "expandAll" });
+    }
+    setExpanded(!expanded);
   };
 
   return (
@@ -47,18 +50,11 @@ export function Toolbar() {
           复制
         </Button>
         <Button
-          icon={<PlusSquareOutlined />}
-          onClick={handleExpandAll}
-          aria-label="全部展开"
+          icon={expanded ? <MinusSquareOutlined /> : <PlusSquareOutlined />}
+          onClick={handleToggleAll}
+          aria-label={expanded ? "全部折叠" : "全部展开"}
         >
-          全部展开
-        </Button>
-        <Button
-          icon={<MinusSquareOutlined />}
-          onClick={handleCollapseAll}
-          aria-label="全部折叠"
-        >
-          全部折叠
+          {expanded ? "全部折叠" : "全部展开"}
         </Button>
       </Space>
     </div>
