@@ -10,11 +10,11 @@
  * Requirements: 4.3, 4.4, 4.5
  */
 
-import { Button, Space } from "antd";
+import { Button, Space, message } from "antd";
 import {
   CopyOutlined,
-  ExpandOutlined,
-  CompressOutlined,
+  PlusSquareOutlined,
+  MinusSquareOutlined,
 } from "@ant-design/icons";
 import { useAppContext } from "./appContext";
 import { prettyPrint } from "../core/printer";
@@ -26,8 +26,9 @@ export function Toolbar() {
     const text = prettyPrint(state.model);
     try {
       await navigator.clipboard.writeText(text);
+      message.success("已复制到剪贴板");
     } catch {
-      // Clipboard write failed — best effort, no crash.
+      message.error("复制失败");
     }
   };
 
@@ -46,14 +47,14 @@ export function Toolbar() {
           复制
         </Button>
         <Button
-          icon={<ExpandOutlined />}
+          icon={<PlusSquareOutlined />}
           onClick={handleExpandAll}
           aria-label="全部展开"
         >
           全部展开
         </Button>
         <Button
-          icon={<CompressOutlined />}
+          icon={<MinusSquareOutlined />}
           onClick={handleCollapseAll}
           aria-label="全部折叠"
         >
