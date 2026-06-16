@@ -16,6 +16,7 @@ import {
   CopyOutlined,
   PlusSquareOutlined,
   MinusSquareOutlined,
+  PlusOutlined,
 } from "@ant-design/icons";
 import { useAppContext } from "./appContext";
 import { prettyPrint } from "../core/printer";
@@ -43,6 +44,15 @@ export function Toolbar() {
     setExpanded(!expanded);
   };
 
+  const handleNewWindow = () => {
+    // 打开一个独立的新窗口，用于多开对比不同 JSON
+    window.open(
+      window.location.href,
+      "_blank",
+      "noopener,noreferrer,width=1200,height=800",
+    );
+  };
+
   return (
     <div className="jb-toolbar" role="toolbar" aria-label="工具栏">
       <Space>
@@ -55,6 +65,14 @@ export function Toolbar() {
           aria-label={expanded ? "全部折叠" : "全部展开"}
         >
           {expanded ? "全部折叠" : "全部展开"}
+        </Button>
+        <Button
+          icon={<PlusOutlined />}
+          onClick={handleNewWindow}
+          aria-label="新建窗口"
+          title="打开新窗口（多开对比）"
+        >
+          新建窗口
         </Button>
       </Space>
     </div>
