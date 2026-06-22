@@ -219,6 +219,13 @@ body,
   opacity: 0.8;
 }
 
+/* TreeView: let the inner list fill the panel; long values wrap instead of
+   being clipped (see per-token wrapping rules below). */
+.jb-tree-view {
+  width: 100%;
+  box-sizing: border-box;
+}
+
 /* TreeRow styles. */
 .jb-tree-row {
   display: flex;
@@ -231,6 +238,26 @@ body,
   white-space: nowrap;
   transition: background 0.15s;
   border-radius: 3px;
+}
+
+/* Toggle, key and punctuation stay on one line and never shrink. */
+.jb-tree-row .jb-toggle-indicator,
+.jb-tree-row .jb-token-key,
+.jb-tree-row .jb-token-punctuation {
+  flex-shrink: 0;
+}
+
+/* Primitive values may wrap (including long unbroken numbers/strings/urls)
+   so nothing is cut off at the right edge of the panel. */
+.jb-tree-row .jb-token-string,
+.jb-tree-row .jb-token-number,
+.jb-tree-row .jb-token-boolean,
+.jb-tree-row .jb-token-null,
+.jb-tree-row .jb-link {
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+  word-break: break-word;
+  min-width: 0;
 }
 
 .jb-tree-row-collapsible {

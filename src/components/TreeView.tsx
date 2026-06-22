@@ -51,13 +51,16 @@ export function TreeView() {
       style={{ height: "100%" }}
     >
       {rows.map((row) => {
-        const key = serializePath(row.path);
+        const serialized = serializePath(row.path);
+        // Closing rows share their container's path, so give them a distinct
+        // React key and exclude them from match highlighting.
+        const key = row.closing ? `${serialized}#close` : serialized;
         return (
           <TreeRow
             key={key}
             row={row}
-            isMatch={matchSet.has(key)}
-            isCurrentMatch={key === currentMatchPath}
+            isMatch={!row.closing && matchSet.has(serialized)}
+            isCurrentMatch={!row.closing && serialized === currentMatchPath}
             onToggle={handleToggle}
           />
         );

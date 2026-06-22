@@ -55,6 +55,12 @@ export type FlatRow = {
   childCount: number;
   /** Short rendering of a primitive value (absent for containers). */
   primitivePreview?: string;
+  /**
+   * Set on synthetic "closing bracket" rows emitted after an expanded
+   * container's children, so the tree shows a matching `}` / `]` and reads as
+   * complete, balanced JSON. Absent on all normal rows.
+   */
+  closing?: "}" | "]";
 };
 
 /**
@@ -152,6 +158,23 @@ export function flatten(
       for (let i = 0; i < value.items.length; i++) {
         visit(value.items[i]!, [...path, i], String(i));
       }
+    }
+
+    // Emit a matching closing-bracket row so an expanded, non-empty container
+    // reads as complete JSON. Empty containers render inline as `{}` / `[]`
+    // (handled in the view) and collapsed containers show a summary instead.
+    const childCount = directChildCount(value);
+    if (isCollapsible && childCount > 0) {
+      rows.push({
+        path,
+        depth: path.length,
+        keyLabel: null,
+        kind: value.kind,
+        isCollapsible: false,
+        isCollapsed: false,
+        childCount: 0,
+        closing: value.kind === "object" ? "}" : "]",
+      });
     }
   };
 

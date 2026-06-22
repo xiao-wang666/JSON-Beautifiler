@@ -102,6 +102,16 @@ export function TreeRow({
     }
   };
 
+  // Synthetic closing-bracket row: just the matching `}` / `]` at the
+  // container's indentation. Not interactive, not part of the tree semantics.
+  if (row.closing) {
+    return (
+      <div className="jb-tree-row" style={{ paddingLeft }} aria-hidden="true">
+        <span className="jb-token-punctuation">{row.closing}</span>
+      </div>
+    );
+  }
+
   return (
     <div
       className={rowClasses}
@@ -125,20 +135,19 @@ export function TreeRow({
         </>
       )}
 
-      {/* Value: either collapsed summary or primitive preview */}
+      {/* Value: collapsed summary, empty-container inline, open bracket, or primitive */}
       {row.isCollapsible ? (
-        <>
+        row.isCollapsed ? (
+          <CollapseSummary row={row} />
+        ) : row.childCount === 0 ? (
+          <span className="jb-token-punctuation">
+            {row.kind === "object" ? "{}" : "[]"}
+          </span>
+        ) : (
           <span className="jb-token-punctuation">
             {row.kind === "object" ? "{" : "["}
           </span>
-          {row.isCollapsed ? (
-            <CollapseSummary row={row} />
-          ) : (
-            <span className="jb-token-punctuation">
-              {row.kind === "object" ? "" : ""}
-            </span>
-          )}
-        </>
+        )
       ) : (
         <PrimitiveValue row={row} />
       )}

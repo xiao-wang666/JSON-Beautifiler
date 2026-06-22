@@ -74,7 +74,7 @@ export function InputPanel() {
       placeholder='粘贴 JSON 或 JS 对象字面量，例如 {"name": "value"}'
       spellCheck={false}
       autoSize={false}
-      status={hasError ? "error" : undefined}
+      status={hasError ? "error" : ""}
       style={{ height: "100%", resize: "none" }}
     />
   );
