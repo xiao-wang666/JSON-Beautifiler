@@ -6,6 +6,7 @@
     "scripts": {
         "dev": "vite",
         "build": "tsc -b && vite build",
+        "build:ext": "BUILD_TARGET=extension vite build --outDir chrome-extension/app --emptyOutDir && node scripts/postbuild-ext.mjs",
         "preview": "vite preview",
         "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
         "typecheck": "tsc -p tsconfig.app.json --noEmit"

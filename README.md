@@ -24,6 +24,30 @@ npx serve dist
 
 双击桌面的 `JSON-Beautifier.command` 即可自动启动开发服务器并打开浏览器。
 
+## Chrome 扩展（小组件）
+
+扩展点击图标后，会以弹出窗口打开**扩展内置的打包版**（`chrome-extension/app`）。
+
+不探测任何本地端口 —— 无论 3000 上是否跑着别的项目，点图标永远打开本扩展自带的 JSON Beautifier，不会串到其它项目。
+
+### 构建与加载
+
+```bash
+# 1. 构建扩展（产物打包进 chrome-extension/app，并拷贝图标）
+npm run build:ext
+
+# 2. Chrome 打开 chrome://extensions
+# 3. 打开右上角「开发者模式」
+# 4. 点「加载已解压的扩展程序」，选择项目下的 chrome-extension 目录
+# 5. 点击工具栏的 JSON Beautifier 图标即可
+```
+
+### 说明
+
+- 改了源码想更新扩展内容 → 重新 `npm run build:ext`，再到 `chrome://extensions` 点「刷新」重载扩展。
+- 只改了 `manifest.json` / `background.js`（扩展根目录源文件）→ 无需 `build:ext`，直接在 `chrome://extensions` 点「刷新」即可。
+- `chrome-extension/app` 与 `chrome-extension/icons` 是构建产物，已加入 `.gitignore`；`manifest.json`、`background.js` 是源文件。
+
 ## PWA 安装（离线可用）
 
 1. `npm run build`

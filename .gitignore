@@ -11,6 +11,10 @@ dist
 dist-ssr
 *.local
 
+# Chrome 扩展构建产物（由 npm run build:ext 生成）
+chrome-extension/app
+chrome-extension/icons
+
 # Editor directories and files
 .vscode/*
 !.vscode/extensions.json

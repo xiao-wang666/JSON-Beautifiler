@@ -1,0 +1,16 @@
+{
+    "manifest_version": 3,
+    "name": "JSON Beautifier",
+    "version": "0.1.0",
+    "description": "JSON 美化与可视化工具。点击图标打开内置离线版本。",
+    "action": {
+        "default_title": "JSON Beautifier"
+    },
+    "background": {
+        "service_worker": "background.js"
+    },
+    "icons": {
+        "192": "icons/icon-192.png",
+        "512": "icons/icon-512.png"
+    }
+}
