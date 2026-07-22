@@ -7,6 +7,7 @@
         "dev": "vite",
         "build": "tsc -b && vite build",
         "build:ext": "BUILD_TARGET=extension vite build --outDir chrome-extension/app --emptyOutDir && node scripts/postbuild-ext.mjs",
+        "build:app": "BUILD_TARGET=singlefile vite build --outDir desktop-app --emptyOutDir && node scripts/postbuild-app.mjs",
         "preview": "vite preview",
         "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
         "typecheck": "tsc -p tsconfig.app.json --noEmit"
@@ -18,6 +19,7 @@
         "react-dom": "^18.3.1"
     },
     "devDependencies": {
+        "@types/node": "^22.20.1",
         "@types/react": "^18.3.5",
         "@types/react-dom": "^18.3.0",
         "@typescript-eslint/eslint-plugin": "^7.18.0",
@@ -28,6 +30,7 @@
         "eslint-plugin-react-refresh": "^0.4.11",
         "typescript": "^5.5.4",
         "vite": "^5.4.3",
-        "vite-plugin-pwa": "^1.3.0"
+        "vite-plugin-pwa": "^1.3.0",
+        "vite-plugin-singlefile": "^2.3.3"
     }
 }

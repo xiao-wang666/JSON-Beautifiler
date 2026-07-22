@@ -15,6 +15,9 @@ dist-ssr
 chrome-extension/app
 chrome-extension/icons
 
+# 本地桌面 App 构建产物（由 npm run build:app 生成）
+desktop-app
+
 # Editor directories and files
 .vscode/*
 !.vscode/extensions.json

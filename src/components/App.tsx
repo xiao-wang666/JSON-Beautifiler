@@ -23,6 +23,7 @@ import {
   type AppState,
 } from "../state/appReducer";
 import * as themeStore from "../state/themeStore";
+import { openNewAppWindow } from "../core/newWindow";
 import { AppContext } from "./appContext";
 import { ErrorBanner } from "./ErrorBanner";
 import { InputPanel } from "./InputPanel";
@@ -49,6 +50,18 @@ export function App() {
   useEffect(() => {
     themeStore.save(state.theme);
   }, [state.theme]);
+
+  // 快捷键新建窗口：Cmd+N（原生 App 由菜单处理）/ Ctrl+N。
+  useEffect(() => {
+    const onKeyDown = (e: KeyboardEvent) => {
+      if ((e.metaKey || e.ctrlKey) && (e.key === "n" || e.key === "N")) {
+        e.preventDefault();
+        openNewAppWindow();
+      }
+    };
+    window.addEventListener("keydown", onKeyDown);
+    return () => window.removeEventListener("keydown", onKeyDown);
+  }, []);
 
   const algorithm =
     state.theme === "dark"

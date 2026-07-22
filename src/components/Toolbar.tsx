@@ -20,6 +20,7 @@ import {
 } from "@ant-design/icons";
 import { useAppContext } from "./appContext";
 import { prettyPrint } from "../core/printer";
+import { openNewAppWindow } from "../core/newWindow";
 
 export function Toolbar() {
   const { state, dispatch } = useAppContext();
@@ -45,12 +46,7 @@ export function Toolbar() {
   };
 
   const handleNewWindow = () => {
-    // 打开一个独立的新窗口，用于多开对比不同 JSON
-    window.open(
-      window.location.href,
-      "_blank",
-      "noopener,noreferrer,width=1200,height=800",
-    );
+    openNewAppWindow();
   };
 
   return (
